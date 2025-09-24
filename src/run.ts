@@ -7,15 +7,6 @@ import { serve } from "./serve";
 
 const exec = promisify(originalExec);
 
-/**
- * @example
- * serve 3000 app
- * serve 3000 app -b
- * serve 3000 app public dist
- * serve 127.0.0.1:3000 app public dist
- * serve 3000 app public dist -b
- * serve 3000 app public dist -b src/index.ts
- */
 async function run() {
   let [url, path = "", ...args] = process.argv.slice(2);
   let buildFlagIndex = args.indexOf("-b");
