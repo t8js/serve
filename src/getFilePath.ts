@@ -6,18 +6,16 @@ const cwd = process.cwd();
 
 export async function getFilePath(
   urlPath: string = "",
-  { path = "", dirs = [""] }: Config,
+  { path = "", dirs = [] }: Config,
 ) {
-  for (let dir of dirs) {
+  for (let dir of dirs.length === 0 ? [""] : dirs) {
     let dirPath = join(cwd, path, dir);
     let filePath = join(dirPath, urlPath);
 
     if (await isValidFilePath(filePath, dirPath)) return filePath;
 
-    if (!/\.\w+$/.test(filePath)) {
-      filePath = join(dirPath, urlPath, "index.html");
+    filePath = join(dirPath, urlPath, "index.html");
 
-      if (await isValidFilePath(filePath, dirPath)) return filePath;
-    }
+    if (await isValidFilePath(filePath, dirPath)) return filePath;
   }
 }
