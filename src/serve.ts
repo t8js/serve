@@ -37,7 +37,12 @@ export function serve(config: Config = {}) {
     process.exit(0);
   });
 
-  server.listen(Number(port) || defaultPort, host || defaultHost);
+  let serverPort = Number(port) || defaultPort;
+  let serverHost = host || defaultHost;
+
+  server.listen(serverPort, serverHost);
+
+  console.log(`Server running at http://${serverHost}:${serverPort}`);
 
   return server;
 }
