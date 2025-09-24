@@ -8,7 +8,7 @@
     "static"
   ],
   "bin": {
-    "serve": "dist/run.js"
+    "serve": "dist/run.mjs"
   },
   "repository": {
     "type": "git",
