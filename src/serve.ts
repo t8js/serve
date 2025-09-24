@@ -9,9 +9,8 @@ const defaultHost = "localhost";
 const defaultPort = 3000;
 
 export function serve(config: Config = {}) {
-  let [,, host,, port] = config.url?.match(
-    /^(https?:\/\/)?([^:\/]+)(:(\d+))?\/?/,
-  ) ?? [];
+  let [, , host, , port] =
+    config.url?.match(/^(https?:\/\/)?([^:/]+)(:(\d+))?\/?/) ?? [];
 
   if (!port && /^\d+$/.test(host)) {
     port = host;
