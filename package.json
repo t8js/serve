@@ -1,0 +1,36 @@
+{
+  "name": "@t8/serve",
+  "version": "0.1.0",
+  "description": "",
+  "keywords": [
+    "node",
+    "server",
+    "static"
+  ],
+  "bin": {
+    "serve": "dist/run.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/t8js/serve.git"
+  },
+  "license": "ISC",
+  "author": "axtk",
+  "type": "module",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "npx npm-run-all clean -p compile compile-mjs-bin compile-cjs-bin",
+    "clean": "node -e \"require('node:fs').rmSync('dist', {force: true, recursive: true});\"",
+    "compile": "npx esbuild index.ts --bundle --outdir=dist --platform=node",
+    "compile-mjs-bin": "npx esbuild src/run.ts --bundle --outfile=dist/run.mjs --platform=node --format=esm",
+    "compile-cjs-bin": "npx esbuild src/run.ts --bundle --outfile=dist/run.cjs --platform=node --format=cjs",
+    "prepublishOnly": "npm run build",
+    "preversion": "npx npm-run-all typecheck shape build",
+    "shape": "npx codeshape",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@types/node": "^24.5.2",
+    "typescript": "^5.9.2"
+  }
+}
