@@ -21,7 +21,9 @@ async function run() {
     let inputFile = join(path, args[buildFlagIndex + 1] ?? "index.ts");
     let outputFile = join(path, "dist", args[buildFlagIndex + 2] ?? "index.js");
 
-    await exec(`npx esbuild ${inputFile} --outfile=${outputFile} --bundle --platform=neutral --log-level=warning`);
+    await exec(
+      `npx esbuild ${inputFile} --outfile=${outputFile} --bundle --platform=neutral --log-level=warning`,
+    );
   }
 
   serve({
