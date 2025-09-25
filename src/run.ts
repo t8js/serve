@@ -9,7 +9,6 @@ const exec = promisify(originalExec);
 
 async function run() {
   let [url, ...args] = process.argv.slice(2);
-  let buildFlagIndex = args.indexOf("-b");
   let spa = false;
 
   if (args[0] === "*") {
@@ -17,8 +16,9 @@ async function run() {
     args.shift();
   }
 
+  let buildFlagIndex = args.indexOf("-b");
   let path = args[0];
-  let dirs = buildFlagIndex === -1 ? args : args.slice(0, buildFlagIndex);
+  let dirs = args.slice(1, buildFlagIndex === -1 ? args.length : buildFlagIndex);
 
   if (buildFlagIndex !== -1) {
     let inputFile = join(path, args[buildFlagIndex + 1] ?? "index.ts");
