@@ -8,7 +8,7 @@ export async function getFilePath(
   urlPath = "",
   { path = "", dirs = [], spa }: Config,
 ) {
-  let effectiveURLPath = spa ? "/" : urlPath;
+  let effectiveURLPath = spa ? "/" : urlPath.replace(/[\?#].*$/, "");
 
   for (let dir of dirs.length === 0 ? [""] : dirs) {
     let dirPath = join(cwd, path, dir);
