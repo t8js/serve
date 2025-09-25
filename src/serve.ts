@@ -9,7 +9,9 @@ import { mimeTypes } from "./mimeTypes";
 const defaultHost = "localhost";
 const defaultPort = 3000;
 
-export async function serve(config: Config = {}) {
+export type Server = ReturnType<typeof createServer>;
+
+export async function serve(config: Config = {}): Promise<Server> {
   let [, , host, , port] =
     config.url?.match(/^(https?:\/\/)?([^:/]+)(:(\d+))?\/?/) ?? [];
 
