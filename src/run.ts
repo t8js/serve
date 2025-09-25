@@ -8,8 +8,17 @@ import { serve } from "./serve";
 const exec = promisify(originalExec);
 
 async function run() {
-  let [url, path = "", ...args] = process.argv.slice(2);
+  let [url, ...args] = process.argv.slice(2);
   let buildFlagIndex = args.indexOf("-b");
+  let spa = false;
+
+  if (args[0] === "*") {
+    spa = true;
+    args.shift();
+  }
+
+  let path = args[0];
+  let dirs = buildFlagIndex === -1 ? args : args.slice(0, buildFlagIndex);
 
   if (buildFlagIndex !== -1) {
     let inputFile = join(path, args[buildFlagIndex + 1] ?? "index.ts");
@@ -24,7 +33,8 @@ async function run() {
   serve({
     url,
     path,
-    dirs: buildFlagIndex === -1 ? args : args.slice(0, buildFlagIndex),
+    dirs,
+    spa,
   });
 }
 

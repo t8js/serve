@@ -5,16 +5,19 @@ import { isValidFilePath } from "./isValidFilePath";
 const cwd = process.cwd();
 
 export async function getFilePath(
-  urlPath: string = "",
-  { path = "", dirs = [] }: Config,
+  urlPath = "",
+  { path = "", dirs = [], spa }: Config,
 ) {
+  let effectiveURLPath = spa ? "/" : urlPath;
+
   for (let dir of dirs.length === 0 ? [""] : dirs) {
     let dirPath = join(cwd, path, dir);
-    let filePath = join(dirPath, urlPath);
+    let filePath = join(dirPath, effectiveURLPath);
 
-    if (await isValidFilePath(filePath, dirPath)) return filePath;
+    if (!effectiveURLPath.endsWith("/") && await isValidFilePath(filePath, dirPath))
+      return filePath;
 
-    filePath = join(dirPath, urlPath, "index.html");
+    filePath = join(dirPath, effectiveURLPath, "index.html");
 
     if (await isValidFilePath(filePath, dirPath)) return filePath;
   }
