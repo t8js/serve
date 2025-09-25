@@ -6,7 +6,8 @@ const defaultPort = 3000;
 export function getTarget(config: Config = {}) {
   let { host, port, url } = config;
 
-  let [, , urlHost, , urlPort] = url?.match(/^(https?:\/\/)?([^:/]+)(:(\d+))?\/?/) ?? [];
+  let [, , urlHost, , urlPort] =
+    url?.match(/^(https?:\/\/)?([^:/]+)(:(\d+))?\/?/) ?? [];
 
   if (!urlPort && /^\d+$/.test(urlHost)) {
     urlPort = urlHost;
