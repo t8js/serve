@@ -39,10 +39,6 @@ export async function serve(config: Config = {}): Promise<Server> {
       createReadStream(filePath).pipe(res);
     });
 
-    server.on("close", () => {
-      process.exit(0);
-    });
-
     let serverPort = Number(port) || defaultPort;
     let serverHost = host || defaultHost;
 
