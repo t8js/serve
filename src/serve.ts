@@ -20,32 +20,33 @@ export async function serve(config: Config = {}) {
 
   await bundle(config);
 
-  let server = createServer(async (req, res) => {
-    let filePath = await getFilePath(req.url, config);
+  return new Promise(resolve => {
+    let server = createServer(async (req, res) => {
+      let filePath = await getFilePath(req.url, config);
 
-    if (filePath === undefined) {
-      res.writeHead(404, { "content-type": "text/plain" });
-      res.end("Not found");
-      return;
-    }
+      if (filePath === undefined) {
+        res.writeHead(404, { "content-type": "text/plain" });
+        res.end("Not found");
+        return;
+      }
 
-    let ext = extname(filePath).slice(1).toLowerCase();
-    let mimeType = mimeTypes[ext] ?? "application/octet-stream";
+      let ext = extname(filePath).slice(1).toLowerCase();
+      let mimeType = mimeTypes[ext] ?? "application/octet-stream";
 
-    res.writeHead(200, { "content-type": mimeType });
-    createReadStream(filePath).pipe(res);
+      res.writeHead(200, { "content-type": mimeType });
+      createReadStream(filePath).pipe(res);
+    });
+
+    server.on("close", () => {
+      process.exit(0);
+    });
+
+    let serverPort = Number(port) || defaultPort;
+    let serverHost = host || defaultHost;
+
+    server.listen(serverPort, serverHost, () => {
+      console.log(`Server running at http://${serverHost}:${serverPort}`);
+      resolve(server);
+    });
   });
-
-  server.on("close", () => {
-    process.exit(0);
-  });
-
-  let serverPort = Number(port) || defaultPort;
-  let serverHost = host || defaultHost;
-
-  server.listen(serverPort, serverHost);
-
-  console.log(`Server running at http://${serverHost}:${serverPort}`);
-
-  return server;
 }
