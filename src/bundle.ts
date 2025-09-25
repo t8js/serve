@@ -18,6 +18,6 @@ export async function bundle({ path = "", bundle: options }: Config = {}) {
 
   await rm(join(path, "dist"), { recursive: true, force: true });
   await exec(
-    `npx esbuild ${inputFile} --outfile=${outputFile} --bundle --platform=neutral --log-level=warning`,
+    `npx esbuild ${inputFile} --outfile=${outputFile} --bundle --platform=browser --log-level=warning`,
   );
 }
