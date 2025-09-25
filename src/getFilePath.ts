@@ -14,10 +14,7 @@ export async function getFilePath(
     let dirPath = join(cwd, path, dir);
     let filePath = join(dirPath, urlPath);
 
-    if (
-      !urlPath.endsWith("/") &&
-      (await isValidFilePath(filePath, dirPath))
-    )
+    if (!urlPath.endsWith("/") && (await isValidFilePath(filePath, dirPath)))
       return filePath;
 
     filePath = join(dirPath, spa ? "" : urlPath, "index.html");
