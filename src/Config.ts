@@ -5,5 +5,6 @@ export type Config = {
   path?: string;
   dirs?: string[];
   spa?: boolean;
+  silent?: boolean;
   bundle?: boolean | BundleConfig;
 };
