@@ -32,6 +32,7 @@ async function run() {
     dirs,
     spa,
     bundle,
+    log: true,
   });
 }
 

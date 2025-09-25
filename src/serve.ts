@@ -43,7 +43,7 @@ export async function serve(config: Config = {}): Promise<Server> {
     let serverHost = host || defaultHost;
 
     server.listen(serverPort, serverHost, () => {
-      if (!config.silent)
+      if (config.log)
         console.log(`Server running at http://${serverHost}:${serverPort}`);
 
       resolve(server);
