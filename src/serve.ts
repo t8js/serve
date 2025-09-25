@@ -4,22 +4,12 @@ import { extname } from "node:path";
 import { bundle } from "./bundle";
 import type { Config } from "./Config";
 import { getFilePath } from "./getFilePath";
+import { getTarget } from "./getTarget";
 import { mimeTypes } from "./mimeTypes";
-
-const defaultHost = "localhost";
-const defaultPort = 3000;
 
 export type Server = ReturnType<typeof createServer>;
 
 export async function serve(config: Config = {}): Promise<Server> {
-  let [, , host, , port] =
-    config.url?.match(/^(https?:\/\/)?([^:/]+)(:(\d+))?\/?/) ?? [];
-
-  if (!port && /^\d+$/.test(host)) {
-    port = host;
-    host = defaultHost;
-  }
-
   await bundle(config);
 
   return new Promise((resolve) => {
@@ -39,12 +29,11 @@ export async function serve(config: Config = {}): Promise<Server> {
       createReadStream(filePath).pipe(res);
     });
 
-    let serverPort = Number(port) || defaultPort;
-    let serverHost = host || defaultHost;
+    let { host, port } = getTarget(config);
 
-    server.listen(serverPort, serverHost, () => {
+    server.listen(port, host, () => {
       if (config.log)
-        console.log(`Server running at http://${serverHost}:${serverPort}`);
+        console.log(`Server running at http://${host}:${port}`);
 
       resolve(server);
     });
