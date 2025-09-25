@@ -18,7 +18,10 @@ async function run() {
 
   let buildFlagIndex = args.indexOf("-b");
   let path = args[0];
-  let dirs = args.slice(1, buildFlagIndex === -1 ? args.length : buildFlagIndex);
+  let dirs = args.slice(
+    1,
+    buildFlagIndex === -1 ? args.length : buildFlagIndex,
+  );
 
   if (buildFlagIndex !== -1) {
     let inputFile = join(path, args[buildFlagIndex + 1] ?? "index.ts");
