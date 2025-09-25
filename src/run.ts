@@ -17,8 +17,7 @@ async function run() {
   let dirs: string[];
   let bundle: Config["bundle"];
 
-  if (bundleFlagIndex === -1)
-    dirs = args.slice(1);
+  if (bundleFlagIndex === -1) dirs = args.slice(1);
   else {
     dirs = args.slice(1, bundleFlagIndex);
     bundle = {

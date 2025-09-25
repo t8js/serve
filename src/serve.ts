@@ -20,7 +20,7 @@ export async function serve(config: Config = {}) {
 
   await bundle(config);
 
-  return new Promise(resolve => {
+  return new Promise((resolve) => {
     let server = createServer(async (req, res) => {
       let filePath = await getFilePath(req.url, config);
 

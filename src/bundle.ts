@@ -7,8 +7,7 @@ import type { Config } from "./Config";
 const exec = promisify(originalExec);
 
 export async function bundle({ path = "", bundle: options }: Config = {}) {
-  if (!options)
-    return;
+  if (!options) return;
 
   let inputFile = join(path, options.input ?? "index.ts");
   let outputFile = join(path, "dist", options.output ?? "index.js");
