@@ -10,9 +10,7 @@ export async function bundle({ path = "", bundle: options }: Config = {}) {
   if (!options) return;
 
   let normalizedOptions: Exclude<Config["bundle"], boolean | undefined> =
-    typeof options === "boolean"
-      ? {}
-      : options;
+    typeof options === "boolean" ? {} : options;
 
   let inputFile = join(path, normalizedOptions.input ?? "index.ts");
   let outputFile = join(path, "dist", normalizedOptions.output ?? "index.js");

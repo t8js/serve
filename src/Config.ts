@@ -3,8 +3,10 @@ export type Config = {
   path?: string;
   dirs?: string[];
   spa?: boolean;
-  bundle?: boolean | {
-    input?: string;
-    output?: string;
-  };
+  bundle?:
+    | boolean
+    | {
+        input?: string;
+        output?: string;
+      };
 };
