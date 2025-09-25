@@ -8,7 +8,7 @@ export async function getFilePath(
   urlPath = "",
   { path = "", dirs = [], spa }: Config,
 ) {
-  let effectiveURLPath = spa ? "/" : urlPath.replace(/[?#].*$/, "");
+  let effectiveURLPath = urlPath.replace(/[?#].*$/, "");
 
   for (let dir of dirs.length === 0 ? [""] : dirs) {
     let dirPath = join(cwd, path, dir);
@@ -20,7 +20,7 @@ export async function getFilePath(
     )
       return filePath;
 
-    filePath = join(dirPath, effectiveURLPath, "index.html");
+    filePath = join(dirPath, spa ? "/" : effectiveURLPath, "index.html");
 
     if (await isValidFilePath(filePath, dirPath)) return filePath;
   }
