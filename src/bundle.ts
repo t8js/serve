@@ -10,8 +10,15 @@ const exec = promisify(originalExec);
 export async function bundle({ path = "", bundle: options }: Config = {}) {
   if (!options) return;
 
-  let normalizedOptions: BundleConfig =
-    typeof options === "boolean" ? {} : options;
+  let normalizedOptions: BundleConfig;
+
+  if (typeof options === "boolean")
+    normalizedOptions = {};
+  else if (typeof options === "string")
+    normalizedOptions = {
+      input: options,
+    };
+  else normalizedOptions = options;
 
   let inputFile = join(path, normalizedOptions.input ?? "index.ts");
   let outputFile = join(path, "dist", normalizedOptions.output ?? "index.js");

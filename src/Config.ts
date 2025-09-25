@@ -8,5 +8,5 @@ export type Config = {
   dirs?: string[];
   spa?: boolean;
   log?: boolean;
-  bundle?: boolean | BundleConfig;
+  bundle?: boolean | string | BundleConfig;
 };
