@@ -12,8 +12,7 @@ export async function bundle({ path = "", bundle: options }: Config = {}) {
 
   let normalizedOptions: BundleConfig;
 
-  if (typeof options === "boolean")
-    normalizedOptions = {};
+  if (typeof options === "boolean") normalizedOptions = {};
   else if (typeof options === "string")
     normalizedOptions = {
       input: options,
