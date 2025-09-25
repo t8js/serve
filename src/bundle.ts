@@ -9,8 +9,13 @@ const exec = promisify(originalExec);
 export async function bundle({ path = "", bundle: options }: Config = {}) {
   if (!options) return;
 
-  let inputFile = join(path, options.input ?? "index.ts");
-  let outputFile = join(path, "dist", options.output ?? "index.js");
+  let normalizedOptions: Exclude<Config["bundle"], boolean | undefined> =
+    typeof options === "boolean"
+      ? {}
+      : options;
+
+  let inputFile = join(path, normalizedOptions.input ?? "index.ts");
+  let outputFile = join(path, "dist", normalizedOptions.output ?? "index.js");
 
   await rm(join(path, "dist"), { recursive: true, force: true });
   await exec(
