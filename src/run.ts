@@ -1,11 +1,6 @@
 #!/usr/bin/env node
-import { exec as originalExec } from "node:child_process";
-import { rm } from "node:fs/promises";
-import { join } from "node:path";
-import { promisify } from "node:util";
+import type { Config } from "./Config";
 import { serve } from "./serve";
-
-const exec = promisify(originalExec);
 
 async function run() {
   let [url, ...args] = process.argv.slice(2);
@@ -16,28 +11,28 @@ async function run() {
     args.shift();
   }
 
-  let buildFlagIndex = args.indexOf("-b");
+  let bundleFlagIndex = args.indexOf("-b");
   let path = args[0];
-  let dirs = args.slice(
-    1,
-    buildFlagIndex === -1 ? args.length : buildFlagIndex,
-  );
 
-  if (buildFlagIndex !== -1) {
-    let inputFile = join(path, args[buildFlagIndex + 1] ?? "index.ts");
-    let outputFile = join(path, "dist", args[buildFlagIndex + 2] ?? "index.js");
+  let dirs: string[];
+  let bundle: Config["bundle"];
 
-    await rm(join(path, "dist"), { recursive: true, force: true });
-    await exec(
-      `npx esbuild ${inputFile} --outfile=${outputFile} --bundle --platform=neutral --log-level=warning`,
-    );
+  if (bundleFlagIndex === -1)
+    dirs = args.slice(1);
+  else {
+    dirs = args.slice(1, bundleFlagIndex);
+    bundle = {
+      input: args[bundleFlagIndex + 1],
+      output: args[bundleFlagIndex + 2],
+    };
   }
 
-  serve({
+  await serve({
     url,
     path,
     dirs,
     spa,
+    bundle,
   });
 }
 

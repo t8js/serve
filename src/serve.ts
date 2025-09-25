@@ -1,6 +1,7 @@
 import { createReadStream } from "node:fs";
 import { createServer } from "node:http";
 import { extname } from "node:path";
+import { bundle } from "./bundle";
 import type { Config } from "./Config";
 import { getFilePath } from "./getFilePath";
 import { mimeTypes } from "./mimeTypes";
@@ -8,7 +9,7 @@ import { mimeTypes } from "./mimeTypes";
 const defaultHost = "localhost";
 const defaultPort = 3000;
 
-export function serve(config: Config = {}) {
+export async function serve(config: Config = {}) {
   let [, , host, , port] =
     config.url?.match(/^(https?:\/\/)?([^:/]+)(:(\d+))?\/?/) ?? [];
 
@@ -16,6 +17,8 @@ export function serve(config: Config = {}) {
     port = host;
     host = defaultHost;
   }
+
+  await bundle(config);
 
   let server = createServer(async (req, res) => {
     let filePath = await getFilePath(req.url, config);

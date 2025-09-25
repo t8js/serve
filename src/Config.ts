@@ -3,4 +3,8 @@ export type Config = {
   path?: string;
   dirs?: string[];
   spa?: boolean;
+  bundle?: {
+    input?: string;
+    output?: string;
+  };
 };
