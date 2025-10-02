@@ -5,13 +5,13 @@ export type Config = {
   url?: string;
   /**
    * Server host.
-   * 
+   *
    * @defaultValue "localhost"
    */
   host?: string;
   /**
    * Server port.
-   * 
+   *
    * @defaultValue 3000
    */
   port?: number;
