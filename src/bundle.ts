@@ -16,10 +16,11 @@ export async function bundle({ path = "", bundle: options }: Config = {}) {
     };
   else normalizedOptions = options;
 
+  let dir = normalizedOptions.dir ?? "dist";
   let inputFile = join(path, normalizedOptions.input ?? "index.ts");
-  let outputFile = join(path, "dist", normalizedOptions.output ?? "index.js");
+  let outputFile = join(path, dir, normalizedOptions.output ?? "index.js");
 
-  await rm(join(path, "dist"), { recursive: true, force: true });
+  await rm(join(path, dir), { recursive: true, force: true });
 
   await build({
     entryPoints: [inputFile],

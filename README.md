@@ -32,7 +32,7 @@ npx @t8/serve 3000 app public dist -b src/index.ts
 /playground
   - index.css
   - index.html
-     + <script src="/dist/index.js"></script>
+    + <script src="/dist/index.js"></script>
   - index.ts
 ```
 
@@ -63,8 +63,8 @@ import { serve } from "@t8/serve";
 let server = await serve({
   port: 3000,
   path: "app",
+  bundle: true, // or `{ input, output }`, or `input` path
   spa: true,
-  bundle: true,
 });
 
 // Stop
@@ -78,7 +78,7 @@ server.close();
 /playground
   - index.css
   - index.html
-     + <script src="/dist/index.js"></script>
+    + <script src="/dist/index.js"></script>
   - index.ts
 ```
 
@@ -92,8 +92,8 @@ let server: Server;
 test.beforeAll(async () => {
   server = await serve({
     path: "playground",
+    bundle: "src/index.tsx",
     spa: true,
-    bundle: true,
   });
 });
 
