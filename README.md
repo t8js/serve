@@ -37,7 +37,7 @@ npx @t8/serve 3000 app public dist -b src/index.ts
   - index.css
   - index.html
       contains <script src="/dist/index.js"></script>
-      contains <link rel="stylesheet" href="/index.css"></script>
+      contains <link rel="stylesheet" href="/index.css">
   - index.ts
 ```
 
@@ -77,7 +77,7 @@ webServer: {
     - index.tsx // imports "./App.tsx", "./index.css"
   - index.html
       contains <script src="/dist/index.js"></script>
-      contains <link rel="stylesheet" href="/dist/index.css"></script>
+      contains <link rel="stylesheet" href="/dist/index.css">
 ```
 
 ```sh
@@ -124,7 +124,7 @@ server.close();
   - index.css
   - index.html
       contains <script src="/dist/index.js"></script>
-      contains <link rel="stylesheet" href="/index.css"></script>
+      contains <link rel="stylesheet" href="/index.css">
   - index.ts
 ```
 
@@ -160,7 +160,7 @@ test.afterAll(() => {
     - index.tsx // imports "./App.tsx", "./index.css"
   - index.html
       contains <script src="/dist/index.js"></script>
-      contains <link rel="stylesheet" href="/dist/index.css"></script>
+      contains <link rel="stylesheet" href="/dist/index.css">
   - index.ts
   - index.test.ts
 ```
