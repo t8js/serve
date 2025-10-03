@@ -71,7 +71,7 @@ webServer: {
 
 ```
 /playground
-  src
+  - src
     - App.tsx
     - index.css
     - index.tsx // imports "./App.tsx", "./index.css"
@@ -155,7 +155,7 @@ test.afterAll(() => {
 
 ```
 /tests/x
-  src
+  - src
     - index.css
     - index.tsx // imports "./App.tsx", "./index.css"
   - index.html
