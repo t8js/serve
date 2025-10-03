@@ -20,7 +20,7 @@
   "main": "dist/index.js",
   "scripts": {
     "build": "npx npm-run-all clean -p compile compile-mjs-bin compile-cjs-bin",
-    "clean": "node -e \"require('node:fs').rmSync('dist', {force: true, recursive: true});\"",
+    "clean": "node -e \"require('node:fs').rmSync('dist', { force: true, recursive: true });\"",
     "compile": "npx esbuild index.ts --bundle --outdir=dist --platform=node --format=esm --external:esbuild",
     "compile-mjs-bin": "npx esbuild src/run.ts --bundle --outfile=dist/run.mjs --platform=node --format=esm --external:esbuild",
     "compile-cjs-bin": "npx esbuild src/run.ts --bundle --outfile=dist/run.cjs --platform=node --format=cjs --external:esbuild",
