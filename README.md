@@ -1,6 +1,10 @@
 # @t8/serve
 
-Simple static file server + bundler, primarily for tests, manual or automated
+Simple static file server + bundler, primarily for demo apps and tests, manual or automated
+
+Use cases:
+- Use the CLI-based server to launch a demo or test app with a single CLI command.
+- Use the code-based setup to launch an own server from multiple tests, each with its own app.
 
 ## CLI
 
@@ -19,7 +23,7 @@ npx @t8/serve 3000 app public dist -b src/index.ts
 ```
 
 <details>
-<summary>Example</summary>
+<summary>Example 1 (flat)</summary>
 
 ```
 // package.json
@@ -32,7 +36,8 @@ npx @t8/serve 3000 app public dist -b src/index.ts
 /playground
   - index.css
   - index.html
-    + <script src="/dist/index.js"></script>
+      contains <script src="/dist/index.js"></script>
+      contains <link rel="stylesheet" href="/index.css"></script>
   - index.ts
 ```
 
@@ -41,6 +46,46 @@ npm run play
 ```
 
 ```
+// playwright.config.ts
+...
+use: {
+  baseURL: "http://localhost:3000",
+},
+webServer: {
+  command: "npm run play",
+  url: "http://localhost:3000",
+},
+```
+
+</details>
+
+<details>
+<summary>Example 2 (nested)</summary>
+
+```
+// package.json
+"scripts": {
+  "play": "npx @t8/serve 3000 * playground -b src/index.tsx"
+}
+```
+
+```
+/playground
+  src
+    - App.tsx
+    - index.css
+    - index.tsx // imports "./App.tsx", "./index.css"
+  - index.html
+      contains <script src="/dist/index.js"></script>
+      contains <link rel="stylesheet" href="/dist/index.css"></script>
+```
+
+```sh
+npm run play
+```
+
+```
+// With Playwright:
 // playwright.config.ts
 ...
 use: {
@@ -63,7 +108,7 @@ import { serve } from "@t8/serve";
 let server = await serve({
   port: 3000,
   path: "app",
-  bundle: true, // or `{ input, output }`, or `input` path
+  bundle: true, // or input path, or `{ input, output, dir }`
   spa: true,
 });
 
@@ -72,18 +117,56 @@ server.close();
 ```
 
 <details>
-<summary>Example</summary>
+<summary>Example 1 (flat)</summary>
 
 ```
 /playground
   - index.css
   - index.html
-    + <script src="/dist/index.js"></script>
+      contains <script src="/dist/index.js"></script>
+      contains <link rel="stylesheet" href="/index.css"></script>
   - index.ts
 ```
 
 ```ts
 // x.test.ts
+import { test } from "@playwright/test";
+import { type Server, serve } from "@t8/serve";
+
+let server: Server;
+
+test.beforeAll(async () => {
+  server = await serve({
+    path: "playground",
+    bundle: true,
+    spa: true,
+  });
+});
+
+test.afterAll(() => {
+  server.close();
+});
+```
+
+</details>
+
+<details>
+<summary>Example 2 (nested)</summary>
+
+```
+/tests/x
+  src
+    - index.css
+    - index.tsx // imports "./App.tsx", "./index.css"
+  - index.html
+      contains <script src="/dist/index.js"></script>
+      contains <link rel="stylesheet" href="/dist/index.css"></script>
+  - index.ts
+  - index.test.ts
+```
+
+```ts
+// tests/x/index.test.ts
 import { test } from "@playwright/test";
 import { serve, type Server } from "@t8/serve";
 
@@ -91,7 +174,7 @@ let server: Server;
 
 test.beforeAll(async () => {
   server = await serve({
-    path: "playground",
+    path: "tests/x",
     bundle: "src/index.tsx",
     spa: true,
   });
