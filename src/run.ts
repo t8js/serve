@@ -23,6 +23,7 @@ async function run() {
     bundle = {
       input: args[bundleFlagIndex + 1],
       output: args[bundleFlagIndex + 2],
+      dir: args[bundleFlagIndex + 3],
     };
   }
 

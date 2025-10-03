@@ -9,7 +9,7 @@ Use cases:
 ## CLI
 
 ```sh
-npx @t8/serve [url|port] [*] [app_dir] [...assets_dirs] [-b [bundle_input_path] [bundle_output_path]]
+npx @t8/serve [url|port] [*] [app_dir] [...assets_dirs] [-b [bundle_input_path] [bundle_output_path] [bundle_output_dir]]
 # * = SPA mode: serve all unmatched paths as "/"
 
 npx @t8/serve 3000 app
