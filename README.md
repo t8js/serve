@@ -46,6 +46,7 @@ npm run play
 ```
 
 ```
+// With Playwright:
 // playwright.config.ts
 ...
 use: {
