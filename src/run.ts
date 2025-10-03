@@ -21,9 +21,9 @@ async function run() {
   else {
     dirs = args.slice(1, bundleFlagIndex);
     bundle = {
-      input: args[bundleFlagIndex + 1],
-      output: args[bundleFlagIndex + 2],
-      dir: args[bundleFlagIndex + 3],
+      input: args[bundleFlagIndex + 1] || undefined,
+      output: args[bundleFlagIndex + 2] || undefined,
+      dir: args[bundleFlagIndex + 3] || undefined,
     };
   }
 

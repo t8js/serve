@@ -4,17 +4,17 @@ export type BundleConfig = {
    *
    * @defaultValue "dist"
    */
-  dir?: string;
+  dir?: string | undefined;
   /**
    * Input path relative to the server config `path`.
    *
    * @defaultValue "index.ts"
    */
-  input?: string;
+  input?: string | undefined;
   /**
    * Output path relative to the bundle config `dir`.
    *
    * @defaultValue "index.js"
    */
-  output?: string;
+  output?: string | undefined;
 };
