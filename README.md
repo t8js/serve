@@ -111,6 +111,13 @@ let server = await serve({
   path: "app",
   bundle: true, // or input path, or `{ input, output, dir }`
   spa: true,
+  // Optional custom request handler (e.g. for simple APIs or API mocks)
+  onRequest(req, res) {
+    if (req.url === "/items") {
+      res.writeHead(200, { "content-type": "application/json" });
+      res.end(JSON.stringify(["apple", "lemon", "cherry"]));
+    }
+  },
 });
 
 // Stop
@@ -179,13 +186,6 @@ test.beforeAll(async () => {
     path: "tests/x",
     bundle: "src/index.tsx",
     spa: true,
-    // Optional custom request handler
-    onRequest(req, res) {
-      if (req.url === "/items") {
-        res.writeHead(200, { "content-type": "application/json" });
-        res.end(JSON.stringify(["apple", "lemon", "cherry"]));
-      }
-    }
   });
 });
 
