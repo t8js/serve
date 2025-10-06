@@ -1,3 +1,4 @@
+import type { IncomingMessage, ServerResponse } from "node:http";
 import type { BundleConfig } from "./BundleConfig";
 
 export type Config = {
@@ -38,4 +39,6 @@ export type Config = {
    * If `string`, it's equivalent to `input` in `{ input, ouput: "index.js" }`.
    */
   bundle?: boolean | string | BundleConfig | undefined;
+  /** Custom request handler. */
+  onRequest?: (req?: IncomingMessage, res?: ServerResponse<IncomingMessage>) => void | Promise<void>;
 };
