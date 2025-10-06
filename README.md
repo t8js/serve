@@ -111,13 +111,6 @@ let server = await serve({
   path: "app",
   bundle: true, // or input path, or `{ input, output, dir }`
   spa: true,
-  // Optional custom request handler (e.g. for simple APIs or API mocks)
-  onRequest(req, res) {
-    if (req.url === "/items") {
-      res.writeHead(200, { "content-type": "application/json" });
-      res.end(JSON.stringify(["apple", "lemon", "cherry"]));
-    }
-  },
 });
 
 // Stop
@@ -191,6 +184,26 @@ test.beforeAll(async () => {
 
 test.afterAll(() => {
   server.close();
+});
+```
+
+</details>
+
+<details>
+<summary>Example 3 (simple API)</summary>
+
+```ts
+import { serve } from "@t8/serve";
+
+let server = await serve({
+  // ... Rest of the config
+  // Optional custom request handler, e.g. for simple APIs or API mocks
+  onRequest(req, res) {
+    if (req.url === "/items") {
+      res.writeHead(200, { "content-type": "application/json" });
+      res.end(JSON.stringify(["apple", "lemon", "cherry"]));
+    }
+  },
 });
 ```
 
