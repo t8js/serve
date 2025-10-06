@@ -157,6 +157,7 @@ test.afterAll(() => {
 ```
 /tests/x
   - src
+    - App.tsx
     - index.css
     - index.tsx // imports "./App.tsx", "./index.css"
   - index.html
