@@ -170,7 +170,7 @@ test.afterAll(() => {
 ```ts
 // tests/x/index.test.ts
 import { test } from "@playwright/test";
-import { serve, type Server } from "@t8/serve";
+import { type Server, serve } from "@t8/serve";
 
 let server: Server;
 
