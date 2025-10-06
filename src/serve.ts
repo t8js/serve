@@ -16,8 +16,7 @@ export async function serve(config: Config = {}): Promise<Server> {
     let server = createServer(async (req, res) => {
       await config.onRequest?.(req, res);
 
-      if (res.headersSent)
-        return;
+      if (res.headersSent) return;
 
       let filePath = await getFilePath(req.url, config);
 

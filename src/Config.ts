@@ -40,5 +40,8 @@ export type Config = {
    */
   bundle?: boolean | string | BundleConfig | undefined;
   /** Custom request handler. */
-  onRequest?: (req?: IncomingMessage, res?: ServerResponse<IncomingMessage>) => void | Promise<void>;
+  onRequest?: (
+    req?: IncomingMessage,
+    res?: ServerResponse<IncomingMessage>,
+  ) => void | Promise<void>;
 };
