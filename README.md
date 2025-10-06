@@ -179,6 +179,13 @@ test.beforeAll(async () => {
     path: "tests/x",
     bundle: "src/index.tsx",
     spa: true,
+    // Optional custom request handler
+    onRequest(req, res) {
+      if (req.url === "/items") {
+        res.writeHead(200, { "content-type": "application/json" });
+        res.end(JSON.stringify(["apple", "lemon", "cherry"]));
+      }
+    }
   });
 });
 
