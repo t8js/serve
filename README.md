@@ -2,7 +2,8 @@
 
 Simple static file server + bundler, primarily for demo apps and tests, manual or automated
 
-Use cases:
+## Use cases
+
 - Use the CLI-based server to launch a demo or test app with a single CLI command.
 - Use the code-based setup to launch an own server from multiple tests, each with its own app.
 
