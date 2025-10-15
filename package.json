@@ -1,6 +1,6 @@
 {
   "name": "@t8/serve",
-  "version": "0.1.29",
+  "version": "0.1.30",
   "description": "Simple static file server + bundler, primarily for demo apps and tests, manual or automated",
   "keywords": [
     "node",
