@@ -1,10 +1,14 @@
 import { rm } from "node:fs/promises";
 import { join } from "node:path";
-import { build, BuildOptions, context } from "esbuild";
+import { type BuildOptions, build, context } from "esbuild";
 import type { BundleConfig } from "./BundleConfig";
 import type { Config } from "./Config";
 
-export async function bundle({ path = "", bundle: options, watch }: Config = {}) {
+export async function bundle({
+  path = "",
+  bundle: options,
+  watch,
+}: Config = {}) {
   if (!options) return;
 
   let normalizedOptions: BundleConfig;
