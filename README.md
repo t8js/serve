@@ -10,7 +10,7 @@ Simple static file server + bundler, primarily for demo apps and tests, manual o
 ## CLI
 
 ```sh
-npx @t8/serve [url|port] [*] [app_dir] [...assets_dirs] [-b [bundle_input_path] [bundle_output_path] [bundle_output_dir]]
+npx @t8/serve [url|port] [*] [app_dir] [...assets_dirs] [-b [bundle_input_path] [bundle_output_path] [bundle_output_dir]] [--watch]
 # * = SPA mode: serve all unmatched paths as "/"
 
 npx @t8/serve 3000 app
@@ -97,6 +97,35 @@ webServer: {
   command: "npm run play",
   url: "http://localhost:3000",
 },
+```
+
+</details>
+
+<details>
+<summary>Example 3 (index.html)</summary>
+
+```
+/app
+  - src
+    - index.ts
+  - index.css
+  - index.html
+      contains <script src="dist/index.js"></script>
+      contains <link rel="stylesheet" href="index.css">
+```
+
+```
+// /app/package.json
+{
+  "name": "app",
+  "scripts": {
+    "start": "npx @t8/serve 80 . -b src/index.ts --watch"
+  }
+}
+```
+
+```sh
+npm start
 ```
 
 </details>
