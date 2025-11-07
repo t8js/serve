@@ -5,10 +5,16 @@ import { serve } from "./serve";
 async function run() {
   let [url, ...args] = process.argv.slice(2);
   let spa = false;
+  let watch = false;
 
   if (args[0] === "*") {
     spa = true;
     args.shift();
+  }
+
+  if (args.at(-1) === "--watch") {
+    watch = true;
+    args.pop();
   }
 
   let bundleFlagIndex = args.indexOf("-b");
@@ -34,6 +40,7 @@ async function run() {
     spa,
     bundle,
     log: true,
+    watch,
   });
 }
 

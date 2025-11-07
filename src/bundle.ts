@@ -1,10 +1,10 @@
 import { rm } from "node:fs/promises";
 import { join } from "node:path";
-import { build } from "esbuild";
+import { build, BuildOptions, context } from "esbuild";
 import type { BundleConfig } from "./BundleConfig";
 import type { Config } from "./Config";
 
-export async function bundle({ path = "", bundle: options }: Config = {}) {
+export async function bundle({ path = "", bundle: options, watch }: Config = {}) {
   if (!options) return;
 
   let normalizedOptions: BundleConfig;
@@ -22,11 +22,23 @@ export async function bundle({ path = "", bundle: options }: Config = {}) {
 
   await rm(join(path, dir), { recursive: true, force: true });
 
-  await build({
+  let buildOptions: BuildOptions = {
     entryPoints: [inputFile],
     outfile: outputFile,
     bundle: true,
     platform: "browser",
     logLevel: "warning",
-  });
+  };
+
+  if (watch) {
+    let ctx = await context(buildOptions);
+
+    await ctx.watch();
+
+    return async () => {
+      await ctx.dispose();
+    };
+  }
+
+  await build(buildOptions);
 }

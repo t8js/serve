@@ -9,10 +9,10 @@ import { mimeTypes } from "./mimeTypes";
 
 export type Server = ReturnType<typeof createServer>;
 
-export async function serve(config: Config = {}): Promise<Server> {
-  await bundle(config);
+export async function serve(config: Config = {}) {
+  let stop = await bundle(config);
 
-  return new Promise((resolve) => {
+  return new Promise<Server>((resolve) => {
     let server = createServer(async (req, res) => {
       await config.onRequest?.(req, res);
 
@@ -32,6 +32,12 @@ export async function serve(config: Config = {}): Promise<Server> {
       res.writeHead(200, { "content-type": mimeType });
       createReadStream(filePath).pipe(res);
     });
+
+    if (stop) {
+      server.on("close", async () => {
+        await stop();
+      });
+    }
 
     let { host, port } = getTarget(config);
 

@@ -28,6 +28,8 @@ export type Config = {
    * unmatched URLs are served as "/".
    */
   spa?: boolean;
+  /** Whether to rebuild whenever the bundled files change. */
+  watch?: boolean;
   /** Whether to log to the console. */
   log?: boolean;
   /**
