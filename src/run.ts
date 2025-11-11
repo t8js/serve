@@ -17,8 +17,12 @@ async function run() {
     let arg = args.pop();
 
     switch (arg) {
-      case "--watch": watch = true; break;
-      case "--minify": minify = true; break;
+      case "--watch":
+        watch = true;
+        break;
+      case "--minify":
+        minify = true;
+        break;
     }
   }
 
