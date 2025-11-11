@@ -6,15 +6,20 @@ async function run() {
   let [url, ...args] = process.argv.slice(2);
   let spa = false;
   let watch = false;
+  let minify = false;
 
   if (args[0] === "*") {
     spa = true;
     args.shift();
   }
 
-  if (args.at(-1) === "--watch") {
-    watch = true;
-    args.pop();
+  while (args.at(-1)?.startsWith("--")) {
+    let arg = args.pop();
+
+    switch (arg) {
+      case "--watch": watch = true; break;
+      case "--minify": minify = true; break;
+    }
   }
 
   let bundleFlagIndex = args.indexOf("-b");
@@ -41,6 +46,7 @@ async function run() {
     bundle,
     log: true,
     watch,
+    minify,
   });
 }
 

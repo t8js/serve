@@ -30,6 +30,8 @@ export type Config = {
   spa?: boolean;
   /** Whether to rebuild whenever the bundled files change. */
   watch?: boolean;
+  /** Whether the bundle should be minified. */
+  minify?: boolean;
   /** Whether to log to the console. */
   log?: boolean;
   /**

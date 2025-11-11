@@ -8,6 +8,7 @@ export async function bundle({
   path = "",
   bundle: options,
   watch,
+  minify,
 }: Config = {}) {
   if (!options) return;
 
@@ -22,17 +23,24 @@ export async function bundle({
 
   let dir = normalizedOptions.dir ?? "dist";
   let inputFile = join(path, normalizedOptions.input ?? "index.ts");
-  let outputFile = join(path, dir, normalizedOptions.output ?? "index.js");
 
   await rm(join(path, dir), { recursive: true, force: true });
 
   let buildOptions: BuildOptions = {
     entryPoints: [inputFile],
-    outfile: outputFile,
     bundle: true,
+    format: "esm",
     platform: "browser",
     logLevel: "warning",
+    minify,
   };
+
+  if (normalizedOptions.output)
+    buildOptions.outfile = join(path, dir, normalizedOptions.output);
+  else {
+    buildOptions.outdir = join(path, dir);
+    buildOptions.splitting = true;
+  }
 
   if (watch) {
     let ctx = await context(buildOptions);
