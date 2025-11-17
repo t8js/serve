@@ -1,4 +1,4 @@
-import type { Config } from "./Config";
+import type { Config } from "./Config.ts";
 
 const defaultHost = "localhost";
 const defaultPort = 3000;

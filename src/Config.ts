@@ -1,5 +1,5 @@
 import type { IncomingMessage, ServerResponse } from "node:http";
-import type { BundleConfig } from "./BundleConfig";
+import type { BundleConfig } from "./BundleConfig.ts";
 
 export type Config = {
   /** Server URL. */

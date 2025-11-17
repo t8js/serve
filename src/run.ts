@@ -1,6 +1,6 @@
 #!/usr/bin/env node
-import type { Config } from "./Config";
-import { serve } from "./serve";
+import type { Config } from "./Config.ts";
+import { serve } from "./serve.ts";
 
 async function run() {
   let [url, ...args] = process.argv.slice(2);

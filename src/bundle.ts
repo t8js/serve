@@ -1,8 +1,8 @@
 import { rm } from "node:fs/promises";
 import { join } from "node:path";
 import { type BuildOptions, build, context } from "esbuild";
-import type { BundleConfig } from "./BundleConfig";
-import type { Config } from "./Config";
+import type { BundleConfig } from "./BundleConfig.ts";
+import type { Config } from "./Config.ts";
 
 export async function bundle({
   path = "",

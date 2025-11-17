@@ -1,6 +1,6 @@
 import { join } from "node:path";
-import type { Config } from "./Config";
-import { isValidFilePath } from "./isValidFilePath";
+import type { Config } from "./Config.ts";
+import { isValidFilePath } from "./isValidFilePath.ts";
 
 const cwd = process.cwd();
 

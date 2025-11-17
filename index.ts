@@ -1,3 +1,3 @@
-export * from "./src/BundleConfig";
-export * from "./src/Config";
-export * from "./src/serve";
+export * from "./src/BundleConfig.ts";
+export * from "./src/Config.ts";
+export * from "./src/serve.ts";
