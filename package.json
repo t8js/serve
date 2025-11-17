@@ -18,8 +18,9 @@
   "author": "axtk",
   "type": "module",
   "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
-    "build": "npx npm-run-all clean -p compile compile-mjs-bin compile-cjs-bin",
+    "build": "npx npm-run-all clean -p compile compile-mjs-bin compile-cjs-bin -s types",
     "clean": "node -e \"require('node:fs').rmSync('dist', { force: true, recursive: true });\"",
     "compile": "npx esbuild index.ts --bundle --outdir=dist --platform=node --format=esm --external:esbuild",
     "compile-mjs-bin": "npx esbuild src/run.ts --bundle --outfile=dist/run.mjs --platform=node --format=esm --external:esbuild",
@@ -27,7 +28,8 @@
     "prepublishOnly": "npm run build",
     "preversion": "npx npm-run-all typecheck shape build",
     "shape": "npx codeshape",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "types": "tsc --emitDeclarationOnly"
   },
   "devDependencies": {
     "@types/node": "^24.5.2",

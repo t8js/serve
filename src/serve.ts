@@ -9,7 +9,7 @@ import { mimeTypes } from "./mimeTypes.ts";
 
 export type Server = ReturnType<typeof createServer>;
 
-export async function serve(config: Config = {}) {
+export async function serve(config: Config = {}): Promise<Server> {
   let stop = await bundle(config);
 
   return new Promise<Server>((resolve) => {
