@@ -1,4 +1,4 @@
-# @t8/serve
+# T8 Serve
 
 Simple static file server + bundler, primarily for demo apps and tests, manual or automated
 
