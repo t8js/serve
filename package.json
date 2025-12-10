@@ -5,7 +5,8 @@
   "keywords": [
     "node",
     "server",
-    "static"
+    "static server",
+    "bundler"
   ],
   "bin": {
     "serve": "dist/run.js"
