@@ -8,7 +8,7 @@
     "static"
   ],
   "bin": {
-    "serve": "dist/run.mjs"
+    "serve": "dist/run.js"
   },
   "repository": {
     "type": "git",
@@ -20,22 +20,16 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "build": "npx npm-run-all clean -p compile compile-mjs-bin compile-cjs-bin -s types",
     "clean": "node -e \"require('node:fs').rmSync('dist', { force: true, recursive: true });\"",
     "compile": "npx esbuild index.ts --bundle --outdir=dist --platform=node --format=esm --external:esbuild",
-    "compile-mjs-bin": "npx esbuild src/run.ts --bundle --outfile=dist/run.mjs --platform=node --format=esm --external:esbuild",
-    "compile-cjs-bin": "npx esbuild src/run.ts --bundle --outfile=dist/run.cjs --platform=node --format=cjs --external:esbuild",
-    "prepublishOnly": "npm run build",
-    "preversion": "npx npm-run-all typecheck shape build",
-    "shape": "npx codeshape",
-    "typecheck": "tsc --noEmit",
-    "types": "tsc --emitDeclarationOnly"
+    "compile-bin": "npx esbuild src/run.ts --bundle --outfile=dist/run.js --platform=node --format=esm --external:esbuild",
+    "preversion": "npx npm-run-all clean shape -p compile compile-bin",
+    "shape": "npx codeshape --typecheck --emit-types"
   },
   "devDependencies": {
-    "@types/node": "^24.5.2",
-    "typescript": "^5.9.2"
+    "@types/node": "^24.5.2"
   },
   "dependencies": {
-    "esbuild": "^0.27.0"
+    "esbuild": "^0.27.1"
   }
 }
