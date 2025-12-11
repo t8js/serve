@@ -9,7 +9,7 @@
     "bundler"
   ],
   "bin": {
-    "serve": "dist/run.js"
+    "serve": "dist/run.mjs"
   },
   "repository": {
     "type": "git",
@@ -18,14 +18,13 @@
   "license": "MIT",
   "author": "axtk",
   "type": "module",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
   "scripts": {
-    "clean": "node -e \"require('node:fs').rmSync('dist', { force: true, recursive: true });\"",
-    "compile": "npx esbuild index.ts --bundle --outdir=dist --platform=node --format=esm --external:esbuild",
-    "compile-bin": "npx esbuild src/run.ts --bundle --outfile=dist/run.js --platform=node --format=esm --external:esbuild",
-    "preversion": "npx npm-run-all clean shape -p compile compile-bin",
-    "shape": "npx codeshape --typecheck --emit-types"
+    "compile-bin": "npx esbuild src/run.ts --bundle --outfile=dist/run.mjs --platform=node --format=esm --external:esbuild",
+    "preversion": "npx npm-run-all shape compile-bin",
+    "shape": "npx codeshape"
   },
   "devDependencies": {
     "@types/node": "^24.5.2"
