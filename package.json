@@ -9,7 +9,7 @@
     "bundler"
   ],
   "bin": {
-    "serve": "dist/run.mjs"
+    "serve": "./dist/run.mjs"
   },
   "repository": {
     "type": "git",
