@@ -2,7 +2,7 @@
 
 Simple static file server + bundler, primarily for demo apps and tests, manual or automated
 
-## Use cases
+Use cases:
 
 - Use the CLI-based server to launch a demo or test app with a single CLI command.
 - Use the code-based setup to launch an own server from multiple tests, each with its own app.
@@ -12,19 +12,29 @@ Simple static file server + bundler, primarily for demo apps and tests, manual o
 ```sh
 npx @t8/serve [url|port] [*] [app_dir] [...assets_dirs] [-b [bundle_input_path] [bundle_output_path] [bundle_output_dir]] [--watch] [--minify]
 # * = SPA mode: serve all unmatched paths as "/"
+```
 
+Examples:
+
+```sh
 npx @t8/serve 3000 app
-npx @t8/serve 3000 app -b
-npx @t8/serve 3000 * app
+# - serve files from './app' at 'localhost:3000'
+
 npx @t8/serve 3000 * app -b
-npx @t8/serve 3000 app public dist
-npx @t8/serve 127.0.0.1:3000 app public dist
-npx @t8/serve 3000 app public dist -b
-npx @t8/serve 3000 app public dist -b src/index.ts
+# - bundle './app/index.ts' to './app/dist/index.js' [-b]
+# - serve files from './app' at 'localhost:3000' in the SPA mode [*] (handling all unmatched paths as "/")
+
+npx @t8/serve 3000 * app -b src/index.ts
+# - bundle './app/src/index.ts' to './app/dist/index.js'
+# - serve files from './app' at 'localhost:3000' in the SPA mode
+
+npx @t8/serve 127.0.0.1:3000 app public dist -b
+# - bundle './app/index.ts' to './app/dist/index.js'
+# - serve files from './app/public' and './app/dist' at '127.0.0.1:3000'
 ```
 
 <details>
-<summary>Example 1 (flat)</summary>
+<summary>Example with Playwright #1 (flat)</summary>
 
 ```
 // package.json
@@ -47,7 +57,6 @@ npm run play
 ```
 
 ```
-// With Playwright:
 // playwright.config.ts
 ...
 use: {
@@ -62,7 +71,7 @@ webServer: {
 </details>
 
 <details>
-<summary>Example 2 (nested)</summary>
+<summary>Example with Playwright #2 (nested)</summary>
 
 ```
 // package.json
@@ -87,7 +96,6 @@ npm run play
 ```
 
 ```
-// With Playwright:
 // playwright.config.ts
 ...
 use: {
@@ -102,7 +110,7 @@ webServer: {
 </details>
 
 <details>
-<summary>Example 3 (index.html)</summary>
+<summary>Example with the watch mode</summary>
 
 ```
 /app
@@ -137,9 +145,10 @@ import { serve } from "@t8/serve";
 
 // Start
 let server = await serve({
-  port: 3000,
+  host: "localhost", // default
+  port: 3000, // default
   path: "app",
-  bundle: true, // or input path, or `{ input, output, dir }`
+  bundle: true, // or input path, or { input, output, dir }
   spa: true,
 });
 
@@ -148,7 +157,7 @@ server.close();
 ```
 
 <details>
-<summary>Example 1 (flat)</summary>
+<summary>Example with Playwright 1 (flat)</summary>
 
 ```
 /playground
@@ -182,7 +191,7 @@ test.afterAll(() => {
 </details>
 
 <details>
-<summary>Example 2 (nested)</summary>
+<summary>Example with Playwright 2 (nested)</summary>
 
 ```
 /tests/x
@@ -220,7 +229,7 @@ test.afterAll(() => {
 </details>
 
 <details>
-<summary>Example 3 (simple API)</summary>
+<summary>Example with an API mock</summary>
 
 ```ts
 import { serve } from "@t8/serve";
