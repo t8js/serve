@@ -9,6 +9,13 @@ import { mimeTypes } from "./mimeTypes.ts";
 
 export type Server = ReturnType<typeof createServer>;
 
+/**
+ * Starts a static server as configured by the `config` parameter and
+ * returns the `Server` object.
+ *
+ * Bundles the code before starting the server, if configured with
+ * `config.bundle` to do so.
+ */
 export async function serve(config: Config = {}): Promise<Server> {
   let stop = await bundle(config);
 
