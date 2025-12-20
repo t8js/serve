@@ -9,28 +9,32 @@ Use cases:
 
 ## CLI
 
-```sh
-npx @t8/serve [url|port] [*] [app_dir] [...assets_dirs] [-b [bundle_input_path] [bundle_output_path] [bundle_output_dir]] [--watch] [--minify]
-# * = SPA mode: serve all unmatched paths as "/"
 ```
+npx @t8/serve <app_dir> [...optional flags]
 
-Examples:
+Flag            Usage
 
-```sh
-npx @t8/serve 3000 app
-# - serve files from './app' at 'localhost:3000'
+--bundle, -b    -b [input_path [[output_path] [output_dir]]]
+                Defaults:
+                - input_path: "index.ts" (relative to <app_dir>)
+                - ouput_path: "index.js" (relative to <app_dir>/<output_dir>)
+                - output_dir: "dist"
 
-npx @t8/serve 3000 * app -b
-# - bundle './app/index.ts' to './app/dist/index.js' [-b]
-# - serve files from './app' at 'localhost:3000' in the SPA mode [*] (handling all unmatched paths as "/")
+--url, -u       -u [<host>:]<port>
+                Default: "localhost:3000"
 
-npx @t8/serve 3000 * app -b src/index.ts
-# - bundle './app/src/index.ts' to './app/dist/index.js'
-# - serve files from './app' at 'localhost:3000' in the SPA mode
+--spa, -s       -s
+                Enables the SPA mode by handling all unmatched paths as "/".
 
-npx @t8/serve 127.0.0.1:3000 app public dist -b
-# - bundle './app/index.ts' to './app/dist/index.js'
-# - serve files from './app/public' and './app/dist' at '127.0.0.1:3000'
+--dirs          --dirs assets public
+                To serve files from the listed subdirectories of <app_dir>.
+                By default, files are served from <app_dir>.
+
+--watch         --watch
+                To rebuild the bundled code if the source code changes.
+
+--minify        --minify
+                To minify the bundled code.
 ```
 
 <details>
@@ -39,7 +43,7 @@ npx @t8/serve 127.0.0.1:3000 app public dist -b
 ```
 // package.json
 "scripts": {
-  "play": "npx @t8/serve 3000 * playground -b"
+  "play": "npx @t8/serve playground -s -b"
 }
 ```
 
@@ -76,7 +80,7 @@ webServer: {
 ```
 // package.json
 "scripts": {
-  "play": "npx @t8/serve 3000 * playground -b src/index.tsx"
+  "play": "npx @t8/serve playground -s -b src/index.tsx"
 }
 ```
 
@@ -127,7 +131,7 @@ webServer: {
 {
   "name": "app",
   "scripts": {
-    "start": "npx @t8/serve 80 . -b src/index.ts --watch"
+    "start": "npx @t8/serve . -u 80 -b src/index.ts --watch"
   }
 }
 ```
