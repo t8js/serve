@@ -9,7 +9,12 @@ type CLIConfig = Omit<Config, "bundle" | "onRequest"> & {
 };
 
 async function run() {
-  let { "": unkeyedArgs, bundle, dirs, ...args } = parseArgs<CLIConfig>(process.argv.slice(2), {
+  let {
+    "": unkeyedArgs,
+    bundle,
+    dirs,
+    ...args
+  } = parseArgs<CLIConfig>(process.argv.slice(2), {
     b: "bundle",
     u: "url",
     s: "spa",
@@ -17,8 +22,10 @@ async function run() {
 
   let config: Config = {
     path: unkeyedArgs?.[0],
-    dirs: Array.isArray(dirs) ? dirs : (dirs && [dirs]),
-    bundle: Array.isArray(bundle) ? { input: bundle[0], output: bundle[1], dir: bundle[2] } : bundle,
+    dirs: Array.isArray(dirs) ? dirs : dirs && [dirs],
+    bundle: Array.isArray(bundle)
+      ? { input: bundle[0], output: bundle[1], dir: bundle[2] }
+      : bundle,
     log: true,
     ...args,
   };
