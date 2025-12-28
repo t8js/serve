@@ -12,7 +12,7 @@ Use cases:
 ```
 npx @t8/serve <app_dir> [...optional flags]
 
-Flag            Usage
+Flag            Usage notes
 
 --bundle, -b    -b [input_path [[output_path] [output_dir]]]
                 Defaults:
@@ -23,18 +23,15 @@ Flag            Usage
 --url, -u       -u [<host>:]<port>
                 Default: "localhost:3000"
 
---spa, -s       -s
-                Enables the SPA mode by handling all unmatched paths as "/".
+--spa, -s       To switch to the SPA mode by handling all unmatched paths as "/".
 
 --dirs          --dirs assets public
                 To serve files from the listed subdirectories of <app_dir>.
                 By default, files are served from <app_dir>.
 
---watch         --watch
-                To rebuild the bundled code if the source code changes.
+--watch         To rebuild the bundled code if the source code changes.
 
---minify        --minify
-                To minify the bundled code.
+--minify        To minify the bundled code.
 ```
 
 <details>
