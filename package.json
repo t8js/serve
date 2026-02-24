@@ -1,5 +1,5 @@
 {
-  "name": "@t8/serve",
+  "name": "auxsrv",
   "version": "0.2.1",
   "description": "Simple static file server + bundler, primarily for demo apps and tests, manual or automated",
   "keywords": [
