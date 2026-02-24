@@ -1,4 +1,4 @@
-# T8 Serve
+# auxsrv
 
 Simple static file server + bundler, primarily for demo apps and tests, manual or automated
 
@@ -10,7 +10,7 @@ Use cases:
 ## CLI
 
 ```
-npx @t8/serve <app_dir> [...optional flags]
+npx auxsrv <app_dir> [...optional flags]
 
 Flag            Usage notes
 
@@ -40,7 +40,7 @@ Flag            Usage notes
 ```
 // package.json
 "scripts": {
-  "play": "npx @t8/serve playground -s -b"
+  "play": "npx auxsrv playground --spa -b"
 }
 ```
 
@@ -77,7 +77,7 @@ webServer: {
 ```
 // package.json
 "scripts": {
-  "play": "npx @t8/serve playground -s -b src/index.tsx"
+  "play": "npx auxsrv playground --spa -b src/index.tsx"
 }
 ```
 
@@ -128,7 +128,7 @@ webServer: {
 {
   "name": "app",
   "scripts": {
-    "start": "npx @t8/serve . -u 80 -b src/index.ts --watch"
+    "start": "npx auxsrv . -u 80 -b src/index.ts --watch"
   }
 }
 ```
@@ -142,7 +142,7 @@ npm start
 ## Code
 
 ```ts
-import { serve } from "@t8/serve";
+import { serve } from "auxsrv";
 
 // Start
 let server = await serve({
@@ -172,7 +172,7 @@ server.close();
 ```ts
 // x.test.ts
 import { test } from "@playwright/test";
-import { type Server, serve } from "@t8/serve";
+import { type Server, serve } from "auxsrv";
 
 let server: Server;
 
@@ -210,7 +210,7 @@ test.afterAll(() => {
 ```ts
 // tests/x/index.test.ts
 import { test } from "@playwright/test";
-import { type Server, serve } from "@t8/serve";
+import { type Server, serve } from "auxsrv";
 
 let server: Server;
 
@@ -233,7 +233,7 @@ test.afterAll(() => {
 <summary>Example with an API mock</summary>
 
 ```ts
-import { serve } from "@t8/serve";
+import { serve } from "auxsrv";
 
 let server = await serve({
   // ... Rest of the config
