@@ -1,7 +1,7 @@
 import { join } from "node:path";
 import type { Config } from "./Config.ts";
-import { isValidFilePath } from "./isValidFilePath.ts";
 import { getRootPath } from "./getRootPath.ts";
+import { isValidFilePath } from "./isValidFilePath.ts";
 
 export async function getFilePath(url = "", config: Config) {
   let { dirs = [], spa } = config;
