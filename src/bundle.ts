@@ -3,16 +3,15 @@ import { join } from "node:path";
 import { type BuildOptions, build, context } from "esbuild";
 import type { BundleConfig } from "./BundleConfig.ts";
 import type { Config } from "./Config.ts";
+import { getRootPath } from "./getRootPath.ts";
 
-export async function bundle({
-  path = "",
-  bundle: options,
-  watch,
-  minify,
-}: Config = {}) {
-  if (!options) return;
+export async function bundle(config: Config = {}) {
+  if (!config.bundle) return;
+
+  let { bundle: options, watch, minify } = config;
 
   let normalizedOptions: BundleConfig;
+  let rootPath = getRootPath(config);
 
   if (typeof options === "boolean") normalizedOptions = {};
   else if (typeof options === "string")
@@ -22,9 +21,9 @@ export async function bundle({
   else normalizedOptions = options;
 
   let dir = normalizedOptions.dir ?? "dist";
-  let inputFile = join(path, normalizedOptions.input ?? "index.ts");
+  let inputFile = join(rootPath, normalizedOptions.input ?? "index.ts");
 
-  await rm(join(path, dir), { recursive: true, force: true });
+  await rm(join(rootPath, dir), { recursive: true, force: true });
 
   let buildOptions: BuildOptions = {
     entryPoints: [inputFile],
@@ -36,9 +35,9 @@ export async function bundle({
   };
 
   if (normalizedOptions.output)
-    buildOptions.outfile = join(path, dir, normalizedOptions.output);
+    buildOptions.outfile = join(rootPath, dir, normalizedOptions.output);
   else {
-    buildOptions.outdir = join(path, dir);
+    buildOptions.outdir = join(rootPath, dir);
     buildOptions.splitting = true;
   }
 
