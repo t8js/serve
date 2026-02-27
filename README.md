@@ -148,7 +148,7 @@ import { serve } from "auxsrv";
 let server = await serve({
   host: "localhost", // default
   port: 3000, // default
-  path: "app",
+  path: import.meta.url, // or "app"
   bundle: true, // or input path, or { input, output, dir }
   spa: true,
 });
@@ -178,7 +178,7 @@ let server: Server;
 
 test.beforeAll(async () => {
   server = await serve({
-    path: "playground",
+    path: import.meta.url, // or "playground"
     bundle: true,
     spa: true,
   });
@@ -216,7 +216,7 @@ let server: Server;
 
 test.beforeAll(async () => {
   server = await serve({
-    path: "tests/x",
+    path: import.meta.url, // or "tests/x"
     bundle: "src/index.tsx",
     spa: true,
   });
