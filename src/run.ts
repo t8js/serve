@@ -26,6 +26,7 @@ async function run() {
     bundle: Array.isArray(bundle)
       ? { input: bundle[0], output: bundle[1], dir: bundle[2] }
       : bundle,
+    watch: true,
     log: true,
     ...args,
   };

@@ -58,7 +58,7 @@ export async function bundle(config: Config = {}) {
     buildOptions.splitting = true;
   }
 
-  if (watch !== false) {
+  if (watch) {
     let ctx = await context(buildOptions);
 
     await ctx.watch();

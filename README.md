@@ -32,7 +32,7 @@ Flag            Usage notes
                 By default, files are served from <app_dir>.
 
 --watch         Whether to rebuild the bundled code if the source code changes.
-                Enabled by default.
+                Enabled by default in the CLI mode.
 
 --minify        To minify the bundled code.
 ```
