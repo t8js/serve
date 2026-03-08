@@ -1,27 +1,46 @@
-import { rm } from "node:fs/promises";
+import { access, rm } from "node:fs/promises";
 import { join } from "node:path";
 import { type BuildOptions, build, context } from "esbuild";
 import type { BundleConfig } from "./BundleConfig.ts";
 import type { Config } from "./Config.ts";
 import { getRootPath } from "./getRootPath.ts";
 
+const possibleInputFiles = [
+  "index.ts",
+  "index.tsx",
+  "src/index.ts",
+  "src/index.tsx",
+];
+
 export async function bundle(config: Config = {}) {
-  if (!config.bundle) return;
+  if (config.bundle === false) return;
 
   let { bundle: options, watch, minify } = config;
 
-  let normalizedOptions: BundleConfig;
+  let normalizedOptions: BundleConfig = {};
   let rootPath = getRootPath(config);
 
-  if (typeof options === "boolean") normalizedOptions = {};
-  else if (typeof options === "string")
-    normalizedOptions = {
-      input: options,
-    };
-  else normalizedOptions = options;
-
+  if (typeof options === "string") normalizedOptions.input = options;
+  else if (typeof options === "object") normalizedOptions = options;
+  
   let dir = normalizedOptions.dir ?? "dist";
-  let inputFile = join(rootPath, normalizedOptions.input ?? "index.ts");
+  let inputFile: string | null = null;
+
+  if (normalizedOptions.input === undefined) {
+    for (let path of possibleInputFiles) {
+      let fullPath = join(rootPath, path);
+
+      try {
+        await access(fullPath);
+        inputFile = fullPath;
+        break;
+      }
+      catch {}
+    }
+  }
+  else inputFile = join(rootPath, normalizedOptions.input);
+  
+  if (inputFile === null) return;
 
   await rm(join(rootPath, dir), { recursive: true, force: true });
 
@@ -41,7 +60,7 @@ export async function bundle(config: Config = {}) {
     buildOptions.splitting = true;
   }
 
-  if (watch) {
+  if (watch !== false) {
     let ctx = await context(buildOptions);
 
     await ctx.watch();

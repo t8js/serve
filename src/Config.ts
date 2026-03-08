@@ -26,9 +26,15 @@ export type Config = {
   /**
    * Enables single-page application (SPA) mode. If `true`, all
    * unmatched URLs are served as "/".
+   *
+   * @default true
    */
   spa?: boolean;
-  /** Whether to rebuild whenever the bundled files change. */
+  /**
+   * Whether to rebuild whenever the bundled files change.
+   *
+   * @default true
+   */
   watch?: boolean;
   /** Whether the bundle should be minified. */
   minify?: boolean;

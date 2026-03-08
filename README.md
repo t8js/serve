@@ -16,20 +16,23 @@ Flag            Usage notes
 
 --bundle, -b    -b [input_path [[output_path] [output_dir]]]
                 Defaults:
-                - input_path: "index.ts" (relative to <app_dir>)
+                - input_path: first of "index.ts", "index.tsx", "src/index.ts", "src/index.tsx"
+                  that exists (relative to <app_dir>)
                 - ouput_path: "index.js" (relative to <app_dir>/<output_dir>)
                 - output_dir: "dist"
 
 --url, -u       -u [<host>:]<port>
                 Default: "localhost:3000"
 
---spa, -s       To switch to the SPA mode by handling all unmatched paths as "/".
+--spa, -s       Whether to enable the SPA mode by handling all unmatched paths as "/".
+                Enabled by default.
 
 --dirs          --dirs assets public
-                To serve files from the listed subdirectories of <app_dir>.
+                Lists subdirectories of <app_dir> to serve files from.
                 By default, files are served from <app_dir>.
 
---watch         To rebuild the bundled code if the source code changes.
+--watch         Whether to rebuild the bundled code if the source code changes.
+                Enabled by default.
 
 --minify        To minify the bundled code.
 ```
@@ -40,7 +43,7 @@ Flag            Usage notes
 ```
 // package.json
 "scripts": {
-  "play": "npx auxsrv playground --spa -b"
+  "play": "npx auxsrv playground"
 }
 ```
 
@@ -77,7 +80,7 @@ webServer: {
 ```
 // package.json
 "scripts": {
-  "play": "npx auxsrv playground --spa -b src/index.tsx"
+  "play": "npx auxsrv playground"
 }
 ```
 
@@ -110,35 +113,6 @@ webServer: {
 
 </details>
 
-<details>
-<summary>Example with the watch mode</summary>
-
-```
-/app
-  - src
-    - index.ts
-  - index.css
-  - index.html
-      contains <script src="dist/index.js"></script>
-      contains <link rel="stylesheet" href="index.css">
-```
-
-```
-// /app/package.json
-{
-  "name": "app",
-  "scripts": {
-    "start": "npx auxsrv . -u 80 -b src/index.ts --watch"
-  }
-}
-```
-
-```sh
-npm start
-```
-
-</details>
-
 ## Code
 
 ```ts
@@ -149,8 +123,8 @@ let server = await serve({
   host: "localhost", // default
   port: 3000, // default
   path: import.meta.url, // or "app"
-  bundle: true, // or input path, or { input, output, dir }
-  spa: true,
+  bundle: true, // default, or input path, or { input, output, dir }
+  spa: true, // default
 });
 
 // Stop
@@ -179,8 +153,6 @@ let server: Server;
 test.beforeAll(async () => {
   server = await serve({
     path: import.meta.url, // or "playground"
-    bundle: true,
-    spa: true,
   });
 });
 
@@ -217,8 +189,6 @@ let server: Server;
 test.beforeAll(async () => {
   server = await serve({
     path: import.meta.url, // or "tests/x"
-    bundle: "src/index.tsx",
-    spa: true,
   });
 });
 

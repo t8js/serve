@@ -2,19 +2,20 @@ export type BundleConfig = {
   /**
    * Output directory path relative to the server config `path`.
    *
-   * @defaultValue "dist"
+   * @default "dist"
    */
   dir?: string | undefined;
   /**
    * Input path relative to the server config `path`.
    *
-   * @defaultValue "index.ts"
+   * By default, the first of `["index.ts", "index.tsx", "src/index.ts", "src/index.tsx"]`
+   * that exists.
    */
   input?: string | undefined;
   /**
    * Output path relative to the bundle config `dir`.
    *
-   * @defaultValue "index.js"
+   * @default "index.js"
    */
   output?: string | undefined;
 };

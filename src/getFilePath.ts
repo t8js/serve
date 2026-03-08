@@ -4,7 +4,7 @@ import { getRootPath } from "./getRootPath.ts";
 import { isValidFilePath } from "./isValidFilePath.ts";
 
 export async function getFilePath(url = "", config: Config) {
-  let { dirs = [], spa } = config;
+  let { dirs = [], spa = true } = config;
 
   let rootPath = getRootPath(config);
   let urlPath = url.replace(/[?#].*$/, "");
