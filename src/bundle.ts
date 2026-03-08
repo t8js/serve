@@ -22,7 +22,7 @@ export async function bundle(config: Config = {}) {
 
   if (typeof options === "string") normalizedOptions.input = options;
   else if (typeof options === "object") normalizedOptions = options;
-  
+
   let dir = normalizedOptions.dir ?? "dist";
   let inputFile: string | null = null;
 
@@ -34,12 +34,10 @@ export async function bundle(config: Config = {}) {
         await access(fullPath);
         inputFile = fullPath;
         break;
-      }
-      catch {}
+      } catch {}
     }
-  }
-  else inputFile = join(rootPath, normalizedOptions.input);
-  
+  } else inputFile = join(rootPath, normalizedOptions.input);
+
   if (inputFile === null) return;
 
   await rm(join(rootPath, dir), { recursive: true, force: true });
