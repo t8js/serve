@@ -4,10 +4,15 @@ import { getRootPath } from "./getRootPath.ts";
 import { isValidFilePath } from "./isValidFilePath.ts";
 
 export async function getFilePath(url = "", config: Config) {
-  let { dirs = [], spa = true } = config;
+  let { debug, dirs = [], spa = true } = config;
 
   let rootPath = getRootPath(config);
   let urlPath = url.replace(/[?#].*$/, "");
+
+  if (debug) {
+    console.log(`Root path: ${JSON.stringify(rootPath)}`);
+    console.log(`URL path: ${JSON.stringify(urlPath)}`);
+  }
 
   for (let dir of dirs.length === 0 ? [""] : dirs) {
     let dirPath = join(rootPath, dir);
@@ -19,5 +24,6 @@ export async function getFilePath(url = "", config: Config) {
     filePath = join(dirPath, spa ? "" : urlPath, "index.html");
 
     if (await isValidFilePath(filePath, dirPath)) return filePath;
+    else if (debug) console.log(`Invalid file path: ${JSON.stringify(filePath)}`);
   }
 }
