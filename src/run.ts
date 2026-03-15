@@ -1,34 +1,33 @@
 #!/usr/bin/env node
-import { parseArgs } from "args-json";
+import { getValues, hasKey, isKey, parseArgs } from "args-json";
 import type { Config } from "./Config.ts";
 import { serve } from "./serve.ts";
 
-type CLIConfig = Omit<Config, "bundle" | "onRequest"> & {
-  ""?: string[];
-  bundle?: string | string[];
-};
+type CLIConfig = Omit<Config, "dirs" | "bundle" | "onRequest">;
 
 async function run() {
-  let {
-    "": unkeyedArgs,
-    bundle,
-    dirs,
-    ...args
-  } = parseArgs<CLIConfig>(process.argv.slice(2), {
-    b: "bundle",
+  let args = process.argv.slice(2);
+  let path: string | undefined;
+
+  if (!isKey(path)) path = args.shift();
+
+  let cliConfig = parseArgs<CLIConfig>(args, {
     u: "url",
     s: "spa",
   });
 
+  let bundleArgs = getValues(["--bundle", "-b"]);
+  let dirs = getValues("--dirs");
+
   let config: Config = {
-    path: unkeyedArgs?.[0],
-    dirs: Array.isArray(dirs) ? dirs : dirs && [dirs],
-    bundle: Array.isArray(bundle)
-      ? { input: bundle[0], output: bundle[1], dir: bundle[2] }
-      : bundle,
+    path,
+    dirs,
+    bundle: Array.isArray(bundleArgs)
+      ? { input: bundleArgs[0], output: bundleArgs[1], dir: bundleArgs[2] }
+      : hasKey("--bundle") || hasKey("-b"),
     watch: true,
     log: true,
-    ...args,
+    ...cliConfig,
   };
 
   await serve(config);
