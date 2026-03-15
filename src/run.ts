@@ -3,9 +3,7 @@ import { getValues, hasKey, isKey, parseArgs } from "args-json";
 import type { Config } from "./Config.ts";
 import { serve } from "./serve.ts";
 
-type CLIConfig = Omit<Config, "dirs" | "bundle" | "onRequest"> & {
-  "": string[];
-};
+type CLIConfig = Omit<Config, "dirs" | "bundle" | "onRequest">;
 
 async function run() {
   let args = process.argv.slice(2);
@@ -13,10 +11,13 @@ async function run() {
 
   if (!isKey(args[0])) path = args.shift();
 
-  let { "": _unkeyedParams, ...cliConfig } = parseArgs<CLIConfig>(args, {
+  let cliConfig = parseArgs<CLIConfig>(args, {
     u: "url",
     s: "spa",
   });
+
+  for (let cliKey of ["", "b", "bundle", "dirs"])
+    delete cliConfig[cliKey as keyof CLIConfig];
 
   let bundleArgs = getValues(["--bundle", "-b"]);
   let dirs = getValues("--dirs");
