@@ -24,7 +24,9 @@ export async function getFilePath(url = "", config: Config) {
     filePath = join(dirPath, spa ? "" : urlPath, "index.html");
 
     if (await isValidFilePath(filePath, dirPath)) return filePath;
-    else if (debug)
+    else if (debug) {
+      console.log(`Dir path: ${JSON.stringify(dirPath)}`);
       console.log(`Invalid file path: ${JSON.stringify(filePath)}`);
+    }
   }
 }
