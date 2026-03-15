@@ -25,18 +25,21 @@ export async function serve(config: Config = {}): Promise<Server> {
 
   return new Promise<Server>((resolve) => {
     let server = createServer(async (req, res) => {
-
       await config.onRequest?.(req, res);
 
       if (res.headersSent) {
-        if (debug) console.log(`\n${req.method} ${req.url}\nQuitting, headers sent`);
+        if (debug)
+          console.log(`\n${req.method} ${req.url}\nQuitting, headers sent`);
 
         return;
       }
 
       let filePath = await getFilePath(req.url, config);
 
-      if (debug) console.log(`\n${req.method} ${req.url}\nFile: ${JSON.stringify(filePath)}`);
+      if (debug)
+        console.log(
+          `\n${req.method} ${req.url}\nFile: ${JSON.stringify(filePath)}`,
+        );
 
       if (filePath === undefined) {
         res.writeHead(404, { "content-type": "text/plain" });
