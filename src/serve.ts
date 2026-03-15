@@ -17,15 +17,26 @@ export type Server = ReturnType<typeof createServer>;
  * `config.bundle` to do so.
  */
 export async function serve(config: Config = {}): Promise<Server> {
+  let { debug, log } = config;
+
+  if (debug) console.log(JSON.stringify(config, null, 2));
+
   let stop = await bundle(config);
 
   return new Promise<Server>((resolve) => {
     let server = createServer(async (req, res) => {
+
       await config.onRequest?.(req, res);
 
-      if (res.headersSent) return;
+      if (res.headersSent) {
+        if (debug) console.log(`\n${req.method} ${req.url}\nQuitting, headers sent`);
+
+        return;
+      }
 
       let filePath = await getFilePath(req.url, config);
+
+      if (debug) console.log(`\n${req.method} ${req.url}\nFile: ${JSON.stringify(filePath)}`);
 
       if (filePath === undefined) {
         res.writeHead(404, { "content-type": "text/plain" });
@@ -42,6 +53,8 @@ export async function serve(config: Config = {}): Promise<Server> {
 
     if (stop) {
       server.on("close", async () => {
+        if (debug) console.log("Server closing");
+
         await stop();
       });
     }
@@ -49,7 +62,7 @@ export async function serve(config: Config = {}): Promise<Server> {
     let { host, port } = getTarget(config);
 
     server.listen(port, host, () => {
-      if (config.log) console.log(`Server running at http://${host}:${port}`);
+      if (log || debug) console.log(`Server running at http://${host}:${port}`);
 
       resolve(server);
     });

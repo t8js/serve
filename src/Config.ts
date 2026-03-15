@@ -54,4 +54,6 @@ export type Config = {
     req?: IncomingMessage,
     res?: ServerResponse<IncomingMessage>,
   ) => void | Promise<void>;
+  /** Turns on debug logging. */
+  debug?: boolean | undefined;
 };
