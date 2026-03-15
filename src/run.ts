@@ -4,7 +4,7 @@ import type { Config } from "./Config.ts";
 import { serve } from "./serve.ts";
 
 type CLIConfig = Omit<Config, "dirs" | "bundle" | "onRequest"> & {
-  "": string[],
+  "": string[];
 };
 
 async function run() {
