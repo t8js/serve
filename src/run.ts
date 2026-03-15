@@ -26,7 +26,7 @@ async function run() {
     path,
     dirs,
     bundle: Array.isArray(bundleArgs)
-      ? { input: bundleArgs[0], output: bundleArgs[1], dir: bundleArgs[2] }
+      ? { input: bundleArgs[0], dir: bundleArgs[1], output: bundleArgs[2] }
       : hasKey("--bundle") || hasKey("-b"),
     watch: true,
     log: true,

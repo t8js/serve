@@ -14,12 +14,12 @@ npx auxsrv <app_dir> [...optional flags]
 
 Flag            Usage notes
 
---bundle, -b    -b [input_path [[output_path] [output_dir]]]
+--bundle, -b    -b [input_file [[output_dir] [output_file]]]
                 Defaults:
-                - input_path: first of "index.ts", "index.tsx", "src/index.ts", "src/index.tsx"
+                - input_file: first of "index.ts", "index.tsx", "src/index.ts", "src/index.tsx"
                   that exists (relative to <app_dir>)
-                - ouput_path: "index.js" (relative to <app_dir>/<output_dir>)
                 - output_dir: "dist"
+                - ouput_file: "index.js" (relative to <app_dir>/<output_dir>)
 
 --url, -u       -u [<host>:]<port>
                 Default: "localhost:3000"
