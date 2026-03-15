@@ -2,7 +2,9 @@ import { access, lstat } from "node:fs/promises";
 
 export async function isValidFilePath(filePath: string, dirPath: string) {
   // Disallow path traversal outside `dirPath`
-  if (dirPath === "." ? filePath.startsWith("..") : !filePath.startsWith(dirPath))
+  if (
+    dirPath === "." ? filePath.startsWith("..") : !filePath.startsWith(dirPath)
+  )
     return false;
 
   try {
