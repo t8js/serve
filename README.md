@@ -51,7 +51,7 @@ Flag            Usage notes
 /playground
   - index.css
   - index.html
-      contains <script src="/dist/index.js"></script>
+      contains <script src="/dist/index.js" type="module"></script>
       contains <link rel="stylesheet" href="/index.css">
   - index.ts
 ```
@@ -91,7 +91,7 @@ webServer: {
     - index.css
     - index.tsx // imports "./App.tsx", "./index.css"
   - index.html
-      contains <script src="/dist/index.js"></script>
+      contains <script src="/dist/index.js" type="module"></script>
       contains <link rel="stylesheet" href="/dist/index.css">
 ```
 
@@ -138,7 +138,7 @@ server.close();
 /playground
   - index.css
   - index.html
-      contains <script src="/dist/index.js"></script>
+      contains <script src="/dist/index.js" type="module"></script>
       contains <link rel="stylesheet" href="/index.css">
   - index.ts
 ```
@@ -173,7 +173,7 @@ test.afterAll(() => {
     - index.css
     - index.tsx // imports "./App.tsx", "./index.css"
   - index.html
-      contains <script src="/dist/index.js"></script>
+      contains <script src="/dist/index.js" type="module"></script>
       contains <link rel="stylesheet" href="/dist/index.css">
   - index.ts
   - index.test.ts
